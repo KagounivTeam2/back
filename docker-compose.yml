@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: kagouniv_db
+    image: mysql
+    environment:
+      MYSQL_DATABASE: ${TEST_DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${TEST_DB_PASSWORD}
+    ports:
+      - '3306:3306'
+    volumes:
+      - kagouniv-volume:/var/lib/mysql
+    networks:
+      - kagouniv_test_network
+
+networks:
+  kagouniv_test_network:
+    driver: bridge
+
+volumes:
+  kagouniv-volume:

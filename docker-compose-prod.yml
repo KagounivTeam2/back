@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  spring-application:
+    container_name: kagouniv_back
+    environment:
+#      todo 운영 환경 빌드 시 필요한 정보들 모두 넣기
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      PORT: ${PORT}
+    ports:
+      - '8080:8080'
+# todo 모니터링?
+volumes:
+  kagouniv-volume:
