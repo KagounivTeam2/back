@@ -1,15 +1,15 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:313706543169:task-definition/kagouniv-back-prod:1",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:313706543169:task-definition/kagouniv-back-prod:4",
     "containerDefinitions": [
         {
             "name": "backApplication",
-            "image": "313706543169.dkr.ecr.us-east-1.amazonaws.com/kagouniv/back:lates",
+            "image": "313706543169.dkr.ecr.us-east-1.amazonaws.com/kagouniv/back:0effc7c532260063c262631bb57ab7bad9e4ce24",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "8080",
+                    "name": "api",
                     "containerPort": 8080,
-                    "hostPort": 80,
+                    "hostPort": 8080,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
@@ -18,28 +18,26 @@
             "environment": [
                 {
                     "name": "DB_URL",
-                    "value": "${DB_URL}"
+                    "value": "jdbc:mysql://kagounivdatabase.cixdejsusyzd.us-east-1.rds.amazonaws.com:3306/kagou"
                 },
                 {
                     "name": "DB_USER",
-                    "value": "${DB_USER}"
+                    "value": "admin"
                 },
                 {
                     "name": "DB_PASSWORD",
-                    "value": "${DB_PASSWORD}"
+                    "value": "OeUSQnSmRktaHk57NlQ2"
                 }
             ],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "systemControls": []
         }
     ],
     "family": "kagouniv-back-prod",
     "executionRoleArn": "arn:aws:iam::313706543169:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 4,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -70,7 +68,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-09-25T11:11:05.599Z",
+    "registeredAt": "2024-09-25T12:39:59.348Z",
     "registeredBy": "arn:aws:iam::313706543169:root",
     "tags": []
 }
