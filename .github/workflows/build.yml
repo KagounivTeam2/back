@@ -39,9 +39,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
           DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DB_URL: ${{ secrets.DATABASE_ENDPOINT }}
-          DB_USER: ${{ secrets.DATABASE_USER }}
-          DB_NAME: ${{ secrets.DATABASE_NAME }}
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          PORT: 8080
 
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -50,4 +51,4 @@ jobs:
 
       - name: Update docker-compose with image tag
         run: |
-          sed -i 's|image:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g' docker-compose-prod.yml
+          sed -i 's|image:.*|image: $ECR_REGISTRY/$ECR_REPOSITORY:${{ github.sha }}|g' docker-compose-prod.yml
