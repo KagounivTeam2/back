@@ -1,9 +1,10 @@
 name: Deploy String boot
 
 on:
-  push:
-    branches:
-      - main  #main branch에 push 시 동작
+  workflow_run:
+    workflows: [ "Dockerizing to Amazon ECR" ]
+    types:
+      - completed
 
 env:
   CODE_DEPLOY_APPLICATION_NAME: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
@@ -31,7 +32,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Code Deploy
-        uses: aws-actions/aws-codedeploy-github-actions@v2.0.0
-        with:
-          application-name: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
-          deployment-group: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
+        run: |
+          aws deploy create-deployment \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
+          --deployment-group-name ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }} \
