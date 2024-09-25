@@ -11,7 +11,7 @@ env:
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
@@ -35,5 +35,5 @@ jobs:
         run: |
           aws deploy create-deployment \
           --deployment-config-name CodeDeployDefault.AllAtOnce \
-          --application-name ${{ env.CODEDEPLOY_APPLICATION_NAME }} \
-          --deployment-group-name ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
