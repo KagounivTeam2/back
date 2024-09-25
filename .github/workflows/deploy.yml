@@ -1,72 +1,42 @@
-name: Deploy to Amazon ECS
+name: Deploy String boot
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [ "Dockerizing to Amazon ECR" ]
+    types:
+      - completed
 
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}           # set this to your Amazon ECR repository name
-  ECS_SERVICE: ${{ secrets.ECS_SERVICE_NAME }}                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: ${{ secrets.MY_ECS_CLUSTER_NAME }}                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: kagouniv-back-prod-revision1.json # set this to the path to your Amazon ECS task definition
-  # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME }}         # set this to the name of the container in the
-  # containerDefinitions section of your task definition
-
-permissions:
-  contents: read
+  CODE_DEPLOY_APPLICATION_NAME: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
 
 jobs:
-  deploy:
-    name: Deploy
+  build:
     runs-on: ubuntu-latest
-    environment: production
-
+    permissions: write-all
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-action/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+      - name: Make zip file
+        run: zip -r $GITHUB_SHA.zip docker-compose-prod.yml scripts/*.sh appspec.yml
+        shell: bash
 
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
+      - name: Upload to S3
+        run: aws s3 cp --region ${{ secrets.AWS_REGION }} ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+
+      - name: Code Deploy
         run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-          environment-variables: |
-            DB_URL=${{ secrets.DB_URL }}
-            DB_USER=${{ secrets.DB_USER }}
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+          aws deploy create-deployment \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+          --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip \
+          --region ${{ secrets.AWS_REGION }} --file-exists-behavior OVERWRITE
