@@ -38,7 +38,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
-          DB_PASSWORD: ${{ secret.DATABASE_PASSWORD }}
+          DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           DB_URL: ${{ secrets.DATABASE_ENDPOINT }}
           DB_USER: ${{ secrets.DATABASE_USER }}
           DB_NAME: ${{ secrets.DATABASE_NAME }}
