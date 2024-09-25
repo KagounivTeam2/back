@@ -11,7 +11,7 @@ files:
     destination: /home/ec2-user/back
     overwrite: yes
 hooks:
-  BeforeInstall:
+  ApplicationStart:
     - location: scripts/deploy.sh
       timeout: 300
       runas: ec2-user
