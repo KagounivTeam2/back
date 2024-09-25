@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim AS build
 
 WORKDIR /app
 
-COPY build.gradle.kts settings.gradle.kts docker-compose-prod.yml /app/
+COPY build.gradle.kts settings.gradle.kts /app/
 
 COPY . /app
 RUN ./gradlew build -x test --parallel
