@@ -1,0 +1,37 @@
+name: Deploy String boot
+
+on:
+  push:
+    branches:
+      - main  #main branch에 push 시 동작
+
+env:
+  CODE_DEPLOY_APPLICATION_NAME: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Configure AWS credentials
+        uses: aws-action/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Code Deploy
+        uses: aws-actions/aws-codedeploy-github-actions@v2.0.0
+        with:
+          application-name: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
+          deployment-group: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
