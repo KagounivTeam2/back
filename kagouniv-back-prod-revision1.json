@@ -15,7 +15,20 @@
                 }
             ],
             "essential": true,
-            "environment": [],
+            "environment": [
+                {
+                    "name": "DB_URL",
+                    "value": "${DB_URL}"
+                },
+                {
+                    "name": "DB_USER",
+                    "value": "${DB_USER}"
+                },
+                {
+                    "name": "DB_PASSWORD",
+                    "value": "${DB_PASSWORD}"
+                }
+            ],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
