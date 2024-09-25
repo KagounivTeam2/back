@@ -1,13 +1,13 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:313706543169:task-definition/kagouniv-back-prod:4",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:313706543169:task-definition/kagouniv-back-test:1",
     "containerDefinitions": [
         {
-            "name": "backApplication",
-            "image": "313706543169.dkr.ecr.us-east-1.amazonaws.com/kagouniv/back:0effc7c532260063c262631bb57ab7bad9e4ce24",
+            "name": "backApplicationtest",
+            "image": "313706543169.dkr.ecr.us-east-1.amazonaws.com/kagouniv/back:lates",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "api",
+                    "name": "8080",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -15,29 +15,18 @@
                 }
             ],
             "essential": true,
-            "environment": [
-                {
-                    "name": "DB_URL",
-                    "value": "jdbc:mysql://kagounivdatabase.cixdejsusyzd.us-east-1.rds.amazonaws.com:3306/kagou"
-                },
-                {
-                    "name": "DB_USER",
-                    "value": "admin"
-                },
-                {
-                    "name": "DB_PASSWORD",
-                    "value": "OeUSQnSmRktaHk57NlQ2"
-                }
-            ],
+            "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "ulimits": [],
             "systemControls": []
         }
     ],
-    "family": "kagouniv-back-prod",
+    "family": "kagouniv-back-test",
     "executionRoleArn": "arn:aws:iam::313706543169:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 4,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -60,7 +49,7 @@
         "FARGATE"
     ],
     "requiresCompatibilities": [
-        "FARGATE"
+        "EC2"
     ],
     "cpu": "1024",
     "memory": "3072",
@@ -68,7 +57,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-09-25T12:39:59.348Z",
+    "registeredAt": "2024-09-25T14:07:28.070Z",
     "registeredBy": "arn:aws:iam::313706543169:root",
     "tags": []
 }
