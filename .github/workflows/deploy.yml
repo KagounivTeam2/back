@@ -34,6 +34,7 @@ jobs:
           echo "DB_PASSWORD=${DB_PASSWORD}" >> .env
           echo "DB_URL=${DB_URL}" >> .env
           echo "DB_USER=${DB_USER}" >> .env
+          echo "PORT=${PORT}" >> .env
 
       - name: Make zip file
         run: zip -r $GITHUB_SHA.zip docker-compose-prod.yml scripts/*.sh appspec.yml .env
