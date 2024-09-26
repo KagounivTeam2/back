@@ -11,6 +11,9 @@ files:
     destination: /home/ec2-user/back
     overwrite: yes
 hooks:
+  AfterInstall:
+    - location: scripts/change-script-permissions.sh
+      timeout: 180
   ApplicationStart:
     - location: scripts/deploy.sh
       timeout: 300
