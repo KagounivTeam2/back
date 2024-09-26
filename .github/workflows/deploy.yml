@@ -10,6 +10,10 @@ env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET }}
   CODE_DEPLOY_APPLICATION_NAME: ${{ secrets.CODEDEPLOY_APPLICATION_NAME }}
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ${{ secrets.CODEDEPLOY_DEPLOYMENT_GROUP_NAME }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_URL: ${{ secrets.DB_URL }}
+  DB_USER: ${{ secrets.DB_USER }}
+  PORT: 8080
 
 jobs:
   build:
