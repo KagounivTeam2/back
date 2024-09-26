@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.objenesis.instantiator.util.UnsafeUtils;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor
+@DynamicUpdate
 public class Habit {
 
     @Id
@@ -28,10 +30,10 @@ public class Habit {
     @Column(nullable = false)
     private LocalDate startAt;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate endAt;
 
-    @Column(nullable = false)
+    @Column
     private Integer targetCount;
 
     @Column(nullable = false)
