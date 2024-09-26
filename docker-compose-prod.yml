@@ -3,7 +3,7 @@ version: '3'
 services:
   spring-application:
     container_name: kagouniv_back
-    image: ${image}
+    image: 313706543169.dkr.ecr.us-east-1.amazonaws.com/kagouniv/back:prod
     env_file:
       - .env
     ports:
