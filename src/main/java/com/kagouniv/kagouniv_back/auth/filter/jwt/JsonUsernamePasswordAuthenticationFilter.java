@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class JsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final String DEFAULT_LOGIN_REQUEST_URL = "/api/user/login";
+    private static final String DEFAULT_LOGIN_REQUEST_URL = "/api/auth/login";
 
     private static final String HTTP_METHOD = "POST";    //HTTP 메서드의 방식은 POST 이다.
 

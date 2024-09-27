@@ -76,9 +76,6 @@ public class JwtServiceImpl implements JwtService {
         user.destroyRefreshToken();
     }
 
-    /**
-     * response set ContentType, Status, AccessToken, RefreshToken
-     */
     @Override
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
         response.setStatus(HttpServletResponse.SC_OK);

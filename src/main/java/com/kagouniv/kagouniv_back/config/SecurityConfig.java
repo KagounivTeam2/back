@@ -67,15 +67,15 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                         (authorize) ->
                                 authorize
-                                        .requestMatchers("/login").permitAll()
-                                        .requestMatchers("api/user/").permitAll()
+                                        .requestMatchers("/api/auth/login").permitAll()
+                                        .requestMatchers("/api/auth").permitAll()
                                         .requestMatchers("/swagger-ui/**", "swagger-resources/**").permitAll()
                                         .requestMatchers("/v3/api-docs/**").permitAll()
                                         .anyRequest().authenticated());
 
                 // logout 설정
         http.logout(logout -> logout.
-                logoutUrl("/api/user/logout")
+                logoutUrl("/api/auth/logout")
 //                logoutSuccessUrl("/").
                 .invalidateHttpSession(true)
                 .logoutSuccessHandler((request, response, authentication) -> {

@@ -20,19 +20,4 @@ import java.util.UUID;
 @Tag(name = "User Controller", description = "User API")
 public class UserController {
 
-    private final UserService userService;
-
-    @Operation(summary = "회원가입", description = "회원가입")
-    @PostMapping("/")
-    public ResponseDto<String> register(@RequestBody @Valid UserRequest userRequest) {
-        String createdId = userService.register(userRequest);
-        return new ResponseDto<>(createdId.toString());
-    }
-
-    @Operation(summary = "로그아웃", description = "로그아웃")
-    @PostMapping("/logout")
-    public ResponseDto<String> logout(HttpServletRequest request) {
-        userService.logout(request);
-        return new ResponseDto<>("로그아웃이 성공적으로 처리되었습니다");
-    }
 }
