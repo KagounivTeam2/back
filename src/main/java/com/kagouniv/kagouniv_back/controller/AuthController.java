@@ -2,7 +2,7 @@ package com.kagouniv.kagouniv_back.controller;
 
 import com.kagouniv.kagouniv_back.dto.UserRequest;
 import com.kagouniv.kagouniv_back.dto.response.ResponseDto;
-import com.kagouniv.kagouniv_back.service.UserService;
+import com.kagouniv.kagouniv_back.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name="Auth Controller", description = "Auth API")
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @Operation(summary = "회원가입", description = "회원가입")
     @PostMapping
     public ResponseDto<String> register(@RequestBody @Valid UserRequest userRequest) {
-        String createdId = userService.register(userRequest);
+        String createdId = authService.register(userRequest);
         return new ResponseDto<>(createdId.toString());
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃")
     @PostMapping("/logout")
     public ResponseDto<String> logout(HttpServletRequest request) {
-        userService.logout(request);
+        authService.logout(request);
         return new ResponseDto<>("로그아웃이 성공적으로 처리되었습니다");
     }
 }
