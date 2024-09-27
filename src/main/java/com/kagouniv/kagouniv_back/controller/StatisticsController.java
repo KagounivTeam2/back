@@ -21,14 +21,14 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @Operation(summary = "구름(습관) 생성 횟수 조회", description = "사용자가 생성한 구름(습관)의 총 횟수를 조회합니다.")
-    @GetMapping("/habit_count/{userId}")
+    @GetMapping("/habit_count")
     public ResponseDto<?> getHabitCount(@PathVariable UUID userId) {
         // 구현 코드
         return new ResponseDto<>(statisticsService.getHabitCount(userId));
     }
 
     @Operation(summary = "습관 수행 성공 횟수 조회", description = "사용자가 성공적으로 완료한 습관들의 횟수를 조회합니다.")
-    @GetMapping("/complete_count/{userId}")
+    @GetMapping("/complete_count")
     public ResponseDto<?> getCompleteCount(@PathVariable UUID userId) {
         // 구현 코드
         return new ResponseDto<>(statisticsService.getCompleteCount(userId));

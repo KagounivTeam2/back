@@ -27,7 +27,7 @@ public class HabitController {
     }
 
     @Operation(summary = "습관 정보 가져오기", description = "습관 정보를 조회합니다.")
-    @GetMapping("/habit/{habitId}")
+    @GetMapping("/{habitId}")
     public ResponseDto<?> getHabitInfo(@PathVariable UUID habitId) {
         // 구현 코드
         return new ResponseDto<>(null);
@@ -48,7 +48,7 @@ public class HabitController {
     }
 
     @Operation(summary = "습관 삭제", description = "습관을 삭제합니다.")
-    @DeleteMapping("/{habitId}")
+    @DeleteMapping("/")
     public ResponseDto<?> deleteHabit(@PathVariable UUID habitId) {
         // 구현 코드
         return new ResponseDto<>(null);

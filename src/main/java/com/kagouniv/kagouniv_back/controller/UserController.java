@@ -19,14 +19,14 @@ public class UserController {
     private final UserService userService;
 
     @Operation(summary = "회원 탈퇴", description = "회원 탈퇴를 처리합니다.")
-    @DeleteMapping("/{userId}")
+    @DeleteMapping
     public ResponseDto<String> deleteUser(@PathVariable UUID userId) {
         // 구현 코드
         return new ResponseDto<>("Bye");
     }
 
     @Operation(summary = "회원 정보 수정", description = "회원 정보를 수정합니다.")
-    @PatchMapping("/{userId}")
+    @PatchMapping
     public ResponseDto<?> updateUser(@PathVariable UUID userId, @RequestBody UserRequest userRequest) {
         // 구현 코드
         return new ResponseDto<>(userId);
