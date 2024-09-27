@@ -18,6 +18,6 @@ public class Recommend {
     private UUID id;
 
     @Column(nullable = false)
-    private String recommendHabitName;
+    private UUID recommendHabitName;
 
 }
