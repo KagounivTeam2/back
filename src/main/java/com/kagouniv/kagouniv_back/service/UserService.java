@@ -3,6 +3,8 @@ package com.kagouniv.kagouniv_back.service;
 import com.kagouniv.kagouniv_back.auth.service.JwtService;
 import com.kagouniv.kagouniv_back.domain.User;
 import com.kagouniv.kagouniv_back.dto.UserRequest;
+import com.kagouniv.kagouniv_back.exception.ApiException;
+import com.kagouniv.kagouniv_back.exception.ErrorDefine;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -34,7 +36,7 @@ public class UserService {
     //== 로그아웃 ==//
     public void logout(HttpServletRequest request) {
         String userName = jwtService.extractUsername(request)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         jwtService.destroyRefreshToken(userName);
         SecurityContextHolder.clearContext();

@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.kagouniv.kagouniv_back.domain.User;
+import com.kagouniv.kagouniv_back.exception.ApiException;
+import com.kagouniv.kagouniv_back.exception.ErrorDefine;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,7 +63,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public void updateRefreshToken(String loginId, String refreshToken) {
         User user = userRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         user.updateRefreshToken(refreshToken);
     }
@@ -69,7 +71,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public void destroyRefreshToken(String loginId) {
         User user = userRepository.findByLoginId(loginId)
-                .orElseThrow(() -> new NoSuchElementException("User not found"));
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
         user.destroyRefreshToken();
     }
@@ -97,7 +99,7 @@ public class JwtServiceImpl implements JwtService {
     //== 4 ==//
     public Optional<String> extractUsername(HttpServletRequest request) throws TokenExpiredException{
         String accessToken = extractAccessToken(request)
-                .orElseThrow(() -> new NoSuchElementException("Token not found"));
+                .orElseThrow(() -> new ApiException(ErrorDefine.TOKEN_NOT_FOUND));
 
         return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secret))
                 .build().verify(accessToken).getClaim(USERNAME_CLAIM).asString());

@@ -31,8 +31,8 @@ public class UserController {
 
     @Operation(summary = "로그아웃", description = "로그아웃")
     @PostMapping("/logout")
-    public ResponseDto<Void> logout(HttpServletRequest request) {
+    public ResponseDto<String> logout(HttpServletRequest request) {
         userService.logout(request);
-        return new ResponseDto<>(null);
+        return new ResponseDto<>("로그아웃이 성공적으로 처리되었습니다");
     }
 }
