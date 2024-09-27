@@ -20,7 +20,7 @@ server:
       rename-on-rotate: true
 
 springdoc:
-  packages-to-scan: com.forbeginners.back
+  packages-to-scan: com.kagouniv.kagouniv_back
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
