@@ -40,6 +40,7 @@ public class Habit {
     private Integer currentCount;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Theme theme;
 
     @Column(nullable = false)
