@@ -1,6 +1,5 @@
-package com.kagouniv.kagouniv;
+package com.kagouniv.kagouniv_back;
 
-import com.kagouniv.kagouniv_back.BackApplication;
 import org.springframework.boot.SpringApplication;
 
 public class TestBackApplication {
