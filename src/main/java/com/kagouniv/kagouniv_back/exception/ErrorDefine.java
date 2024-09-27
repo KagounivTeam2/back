@@ -14,7 +14,8 @@ public enum ErrorDefine {
 
     // Not Found
     USER_NOT_FOUND("4040", HttpStatus.NOT_FOUND, "User Not Found"),
-    TOKEN_NOT_FOUND("4041", HttpStatus.NOT_FOUND, "Token Not Found");
+    TOKEN_NOT_FOUND("4041", HttpStatus.NOT_FOUND, "Token Not Found"),
+    HABIT_NOT_FOUND("4042", HttpStatus.NOT_FOUND, "Habit Not Found"),;
 
 
     private final String errorCode;
