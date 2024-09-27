@@ -1,4 +1,4 @@
-package com.kagouniv.kagouniv;
+package com.kagouniv.kagouniv_back;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
