@@ -24,8 +24,10 @@ public class HabitView {
 
     private Integer currentCount;
 
+    @Enumerated(EnumType.STRING)
     private Theme theme;
 
+    @Column(columnDefinition = "INTEGER")
     private Boolean isDone;
 
 }
