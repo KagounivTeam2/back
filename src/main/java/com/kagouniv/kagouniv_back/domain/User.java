@@ -26,10 +26,6 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password; //비밀번호
 
-    /**
-     * 상황이 어떻게 될지 몰라,
-     * 권한을 일단 나누기는 했습니다.
-     */
     @Enumerated(EnumType.STRING)
     private Role role; //권한 -> USER, ADMIN
 
@@ -47,7 +43,7 @@ public class User extends BaseTimeEntity {
 
     //---------------------------------------------------
 
-    public void encdoePassword(PasswordEncoder passwordEncoder) {
+    public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
 
@@ -57,6 +53,11 @@ public class User extends BaseTimeEntity {
 
     public void destroyRefreshToken() {
         this.refreshToken = null;
+    }
+
+    //== 회원가입시, USER의 권한을 부여 ==//
+    public void addUserAuthority() {
+        this.role = Role.USER;
     }
 
     //---------------------------------------------------
