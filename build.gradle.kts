@@ -31,6 +31,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
 
+	//jwt
+	implementation("com.auth0:java-jwt:4.4.0")
+	implementation ("io.jsonwebtoken:jjwt-api:0.11.5")
+	implementation ("io.jsonwebtoken:jjwt-impl:0.11.5")
+	implementation ("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
 	//springdoc
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0")
 	compileOnly("org.projectlombok:lombok")
