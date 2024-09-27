@@ -1,4 +1,4 @@
-package com.kagouniv.kagouniv;
+package com.kagouniv.kagouniv_back;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
