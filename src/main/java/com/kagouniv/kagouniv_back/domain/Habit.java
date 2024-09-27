@@ -27,7 +27,7 @@ public class Habit {
     @Column(nullable = false)
     private String habitName;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate startAt;
 
     @Column
@@ -36,7 +36,7 @@ public class Habit {
     @Column
     private Integer targetCount;
 
-    @Column(nullable = false)
+    @Column
     private Integer currentCount;
 
     @Column(nullable = false)

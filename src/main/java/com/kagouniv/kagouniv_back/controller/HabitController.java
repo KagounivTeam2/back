@@ -1,5 +1,6 @@
 package com.kagouniv.kagouniv_back.controller;
 
+import com.kagouniv.kagouniv_back.annotation.UserId;
 import com.kagouniv.kagouniv_back.dto.HabitRequest;
 import com.kagouniv.kagouniv_back.dto.response.ResponseDto;
 import com.kagouniv.kagouniv_back.service.HabitService;
@@ -20,10 +21,10 @@ public class HabitController {
     private final HabitService habitService;
 
     @Operation(summary = "사용자 습관 리스트 가져오기", description = "사용자의 모든 습관을 조회합니다.")
-    @GetMapping("/{userId}")
-    public ResponseDto<?> getUserHabits(@PathVariable UUID userId) {
+    @GetMapping("/")
+    public ResponseDto<?> getUserHabits(@UserId String userId) {
         // 구현 코드
-        return new ResponseDto<>(null);
+        return new ResponseDto<>(userId);
     }
 
     @Operation(summary = "습관 정보 가져오기", description = "습관 정보를 조회합니다.")
