@@ -18,7 +18,7 @@ public interface HabitViewRepository extends JpaRepository<HabitView, UUID> {
 
     List<HabitView> findByUserId(UUID userId);
     // 특정 유저의 습관 총 횟수 조회
-    @Query("SELECT SUM(h.targetCount) FROM HabitView h WHERE h.id = :userId")
+    @Query("SELECT SUM(h.targetCount) FROM HabitView h WHERE h.userId = :userId")
     Long countHabit(@Param("userId") UUID userId);
 
     Optional<Integer> countByIsDoneTrueAndUserId(UUID uuid);
