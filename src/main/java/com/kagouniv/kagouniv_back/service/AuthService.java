@@ -26,7 +26,13 @@ public class AuthService {
     public String register(UserRequest userRequest) {
         User user = userRequest.toEntity();
 
+        // id중복확인
+        if (userRepository.findByLoginId(user.getLoginId()).isPresent()) {
+            throw new ApiException(ErrorDefine.ALREADY_EXIST_USER);
+        }
+
         user.encodePassword(passwordEncoder);
+
         return userRepository.save(user).getLoginId();
     }
 
