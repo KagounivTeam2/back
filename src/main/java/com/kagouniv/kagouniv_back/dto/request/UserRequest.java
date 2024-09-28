@@ -1,4 +1,4 @@
-package com.kagouniv.kagouniv_back.dto;
+package com.kagouniv.kagouniv_back.dto.request;
 
 import com.kagouniv.kagouniv_back.domain.User;
 import jakarta.validation.constraints.NotNull;

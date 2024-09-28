@@ -1,6 +1,6 @@
 package com.kagouniv.kagouniv_back.controller;
 
-import com.kagouniv.kagouniv_back.dto.UserRequest;
+import com.kagouniv.kagouniv_back.dto.request.UserRequest;
 import com.kagouniv.kagouniv_back.dto.response.ResponseDto;
 import com.kagouniv.kagouniv_back.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

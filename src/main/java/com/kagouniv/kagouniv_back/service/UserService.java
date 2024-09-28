@@ -1,8 +1,7 @@
 package com.kagouniv.kagouniv_back.service;
 
 import com.kagouniv.kagouniv_back.auth.service.JwtService;
-import com.kagouniv.kagouniv_back.domain.User;
-import com.kagouniv.kagouniv_back.dto.UserRequest;
+import com.kagouniv.kagouniv_back.dto.request.UserRequest;
 import com.kagouniv.kagouniv_back.exception.ApiException;
 import com.kagouniv.kagouniv_back.exception.ErrorDefine;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
@@ -10,8 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -33,7 +30,7 @@ public class UserService {
     }
 
     // 회원 정보 수정
-    public void updateUser(HttpServletRequest request, UserRequest userRequest) {
-
-    }
+//    public void updateUser(HttpServletRequest request, UserRequest userRequest) {
+//
+//    }
 }
