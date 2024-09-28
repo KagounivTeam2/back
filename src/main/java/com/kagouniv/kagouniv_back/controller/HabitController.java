@@ -23,7 +23,7 @@ public class HabitController {
     private final HabitService habitService;
 
     @Operation(summary = "사용자 습관 리스트 가져오기", description = "사용자의 모든 습관을 조회합니다.")
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseDto<?> getUserHabits(@UserId String userId) {
         // 구현 코드
         return new ResponseDto<>(habitService.getUserHabits(userId));
