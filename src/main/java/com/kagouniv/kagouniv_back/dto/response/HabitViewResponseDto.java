@@ -25,7 +25,7 @@ public record HabitViewResponseDto(
                 habit.getTargetCount(),
                 habit.getCurrentCount(),
                 habit.getTheme(),
-                false,
+                habit.getIsDone(),
                 favoriteState
         );
     }
