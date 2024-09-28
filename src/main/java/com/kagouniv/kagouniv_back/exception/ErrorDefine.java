@@ -11,6 +11,7 @@ public enum ErrorDefine {
     // Bad Request
     INVALID_ARGUMENT("4000", HttpStatus.BAD_REQUEST, "Bad Request: Invalid Arguments"),
     ALREADY_FINISH_HABIT("4001", HttpStatus.ALREADY_REPORTED, "이미 완료된 미션이거나, 카운트미션이 아닙니다.."),
+    ALREADY_EXIST_MEMBER("4002", HttpStatus.BAD_REQUEST, "이미 존재하는 회원입니다."),
 
 
     // Not Found
