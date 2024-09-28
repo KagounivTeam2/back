@@ -2,7 +2,7 @@ jwt:
   secret: MjAyNC1QLVByb2plY3QtQUlzc3VlLUpXVC1TZWNyZXQtS2V5Cg==
 
   access:
-    expiration: 3600
+    expiration: 86400
     header: Authorization
 
   refresh:
