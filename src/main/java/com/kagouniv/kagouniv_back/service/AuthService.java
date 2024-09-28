@@ -2,7 +2,7 @@ package com.kagouniv.kagouniv_back.service;
 
 import com.kagouniv.kagouniv_back.auth.service.JwtService;
 import com.kagouniv.kagouniv_back.domain.User;
-import com.kagouniv.kagouniv_back.dto.UserRequest;
+import com.kagouniv.kagouniv_back.dto.request.UserRequest;
 import com.kagouniv.kagouniv_back.exception.ApiException;
 import com.kagouniv.kagouniv_back.exception.ErrorDefine;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
