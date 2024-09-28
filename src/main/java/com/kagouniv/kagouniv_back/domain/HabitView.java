@@ -23,8 +23,6 @@ public class HabitView {
 
     private LocalDate endAt;
 
-    @LastModifiedDate
-    @Column(updatable = true)
     private LocalDate lastModified;
 
     private Integer targetCount; // 사용자가 하고자 하는 횟수
