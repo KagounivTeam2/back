@@ -2,14 +2,17 @@ package com.kagouniv.kagouniv_back.service;
 
 import com.kagouniv.kagouniv_back.domain.FavoriteHabit;
 import com.kagouniv.kagouniv_back.domain.Habit;
+import com.kagouniv.kagouniv_back.domain.Recommend;
 import com.kagouniv.kagouniv_back.domain.User;
 import com.kagouniv.kagouniv_back.dto.request.HabitCreateRequestDto;
 import com.kagouniv.kagouniv_back.dto.response.HabitCompleteResponseDto;
 import com.kagouniv.kagouniv_back.dto.response.HabitCreateResponseDto;
+import com.kagouniv.kagouniv_back.dto.response.RecommendResponseDto;
 import com.kagouniv.kagouniv_back.exception.ApiException;
 import com.kagouniv.kagouniv_back.exception.ErrorDefine;
 import com.kagouniv.kagouniv_back.repository.FavoriteHabitRepository;
 import com.kagouniv.kagouniv_back.repository.HabitRepository;
+import com.kagouniv.kagouniv_back.repository.RecommendRepository;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class HabitService {
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
     private final FavoriteHabitRepository favoriteHabitRepository;
+    private final RecommendRepository recommendRepository;
     // 사용자 습관 리스트 가져오기
     public Map<String, Object> getUserHabits(String userId) {
 
@@ -57,8 +61,16 @@ public class HabitService {
     }
 
     // 추천 습관 리스트 가져오기
-    public List<Habit> getRecommendedHabits() {
-        return new ArrayList<>();
+    public Map<String, List<RecommendResponseDto>> getRecommendedHabits() {
+        Map<String, List<RecommendResponseDto>> response = new HashMap<>();
+
+        List<Recommend> recommendResponseDtos = recommendRepository.findAll();
+
+        response.put("recommentList", recommendResponseDtos.stream()
+                .map(RecommendResponseDto::of)
+                .collect(Collectors.toList()));
+
+        return response;
     }
 
     // 습관 생성

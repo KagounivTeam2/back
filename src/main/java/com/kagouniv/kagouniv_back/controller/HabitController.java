@@ -40,9 +40,11 @@ public class HabitController {
 
     @Operation(summary = "추천 습관 리스트 가져오기", description = "추천 습관 리스트를 조회합니다.")
     @GetMapping("/recommends")
-    public ResponseDto<?> getRecommendedHabits() {
+    public ResponseDto<?> getRecommendedHabits(
+
+    ) {
         // 구현 코드
-        return new ResponseDto<>(null);
+        return new ResponseDto<>(habitService.getRecommendedHabits());
     }
 
     @Operation(summary = "습관 생성", description = "새로운 습관을 생성합니다.")
