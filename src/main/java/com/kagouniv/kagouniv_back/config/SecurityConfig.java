@@ -12,6 +12,7 @@ import com.kagouniv.kagouniv_back.exception.CustomAccessDeniedHandler;
 import com.kagouniv.kagouniv_back.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
@@ -49,6 +51,17 @@ public class SecurityConfig {
             "/v3/api-docs/**",
     };
 
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("/**");
+                config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -82,6 +95,7 @@ public class SecurityConfig {
                 }))
             .exceptionHandling(req -> req.authenticationEntryPoint(jwtAuthenticationEntryPoint()))
                 .addFilterAfter(jsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class)
+                .addFilterBefore(corsFilter(), JsonUsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationProcessingFilter(), JsonUsernamePasswordAuthenticationFilter.class)
 
                 // // 커스텀 접근 거부 핸들러 설정
