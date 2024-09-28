@@ -27,8 +27,8 @@ public record HabitCreateResponseDto(
         return new HabitCreateResponseDto(
                 habit.getId().toString(),
                 habit.getHabitName(),
-                habit.getStartAt() != null ? habit.getStartAt().format(formatter) : "",  // 값이 없을 때 빈 문자열 반환
-                habit.getEndAt() != null ? habit.getEndAt().format(formatter) : "",      // LocalDateTime을 문자열로 변환,  // 값이 없을 때 빈 문자열 반환
+                habit.getStartAt() != null ? habit.getStartAt().atStartOfDay().format(formatter) : "",  // 값이 없을 때 빈 문자열 반환
+                habit.getEndAt() != null ? habit.getEndAt().atStartOfDay().format(formatter) : "",      // LocalDateTime을 문자열로 변환,  // 값이 없을 때 빈 문자열 반환
                 habit.getTargetCount(),
                 habit.getCurrentCount(),
                 habit.getTheme(),
