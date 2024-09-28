@@ -17,17 +17,17 @@ public class WebMVCConfig implements WebMvcConfigurer {
     private final HttpUserIdArgumentResolver httpUserIdArgumentResolver;
 
     @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
-        resolvers.add(this.httpUserIdArgumentResolver);
-    }
-
-    @Override
     public void addCorsMappings(final CorsRegistry registry ){
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
                 .allowedMethods("PATCH","GET","POST","PUT","DELETE","HEAD","OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        WebMvcConfigurer.super.addArgumentResolvers(resolvers);
+        resolvers.add(this.httpUserIdArgumentResolver);
     }
 }
