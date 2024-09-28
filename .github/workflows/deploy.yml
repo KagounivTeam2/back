@@ -13,7 +13,8 @@ env:
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   DB_URL: ${{ secrets.DB_URL }}
   DB_USER: ${{ secrets.DB_USER }}
-  PORT: 8080
+  PORT: ${{ secrets.PORT }}
+  AllowList: ${{ vars.AllowList }}
 
 jobs:
   build:
@@ -35,6 +36,7 @@ jobs:
           echo "DB_URL=${DB_URL}" >> .env
           echo "DB_USER=${DB_USER}" >> .env
           echo "PORT=${PORT}" >> .env
+          echo "AllowList=${AllowList}" >> .env
 
       - name: Make zip file
         run: zip -r $GITHUB_SHA.zip docker-compose-prod.yml scripts/*.sh appspec.yml .env

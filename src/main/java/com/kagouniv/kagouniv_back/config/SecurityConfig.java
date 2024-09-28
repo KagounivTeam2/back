@@ -13,6 +13,7 @@ import com.kagouniv.kagouniv_back.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.filters.CorsFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +47,9 @@ public class SecurityConfig {
     private final ObjectMapper objectMapper;
     private final CustomAccessDeniedHandler customAccessDeniedHandler; //커스텀 접근 거부 핸들러
 
+    @Value("${cors.allowed-origins.${spring.profiles.active}}")
+    private List<String> allowOriginList;
+
     private final String[] allowedUrls = {
             "/swagger-ui/**",
             "/swagger-resources/**",
@@ -55,7 +59,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000","http://localhost:3001")); // 허용할 Origin 추가
+        configuration.setAllowedOrigins(allowOriginList); // 허용할 Origin 추가
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

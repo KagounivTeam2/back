@@ -6,7 +6,6 @@ spring:
     serialization:
       write-dates-as-timestamps: false
 
-
 server:
   tomcat:
     connection-timeout: 30s
@@ -29,3 +28,7 @@ springdoc:
     display-request-duration: true
     operations-sorter: alpha
   title: 'kagouniv'
+
+cors:
+  allowed-origins:
+    prod: ${AllowList}
