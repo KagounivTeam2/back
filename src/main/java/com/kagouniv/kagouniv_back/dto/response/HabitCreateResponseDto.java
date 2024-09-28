@@ -9,8 +9,8 @@ import java.time.LocalDate;
 public record HabitCreateResponseDto(
         String habitId,
         String habitName,
-        LocalDate startAt,
-        LocalDate endAt,
+        String startAt,
+        String endAt,
         Integer targetCount,
         Integer realCount,
         Theme theme,
@@ -23,8 +23,8 @@ public record HabitCreateResponseDto(
         return new HabitCreateResponseDto(
                 habit.getId().toString(),
                 habit.getHabitName(),
-                habit.getStartAt(),
-                habit.getEndAt(),
+                habit.getStartAt().toString(),
+                habit.getEndAt().toString(),
                 habit.getTargetCount(),
                 habit.getCurrentCount(),
                 habit.getTheme(),
