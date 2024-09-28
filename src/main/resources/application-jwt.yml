@@ -3,8 +3,8 @@ jwt:
 
   access:
     expiration: 86400
-    header: Authorization
+    header: authorization
 
   refresh:
     expiration: 86400
-    header: Authorization-refresh
+    header: authorization-refresh
