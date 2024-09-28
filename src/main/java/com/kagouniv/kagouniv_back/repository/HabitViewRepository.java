@@ -1,7 +1,6 @@
 package com.kagouniv.kagouniv_back.repository;
 
 import com.kagouniv.kagouniv_back.domain.HabitView;
-import com.kagouniv.kagouniv_back.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

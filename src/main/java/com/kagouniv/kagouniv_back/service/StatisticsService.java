@@ -20,11 +20,10 @@ public class StatisticsService {
     private final UserRepository userRepository;
 
      //구름(습관) 생성 횟수 조회
-    public Integer getHabitCount(String userId) {
+    public Long getHabitCount(String userId) {
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
-        return habitViewRepository.countByIsDoneTrueAndUserId(user.getId())
-                .orElseThrow(()-> new ApiException(ErrorDefine.HABIT_NOT_FOUND));
+        return habitViewRepository.countHabit(user.getId());
     }
 
     // 습관 수행 성공 횟수 조회
