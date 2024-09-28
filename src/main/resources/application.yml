@@ -32,3 +32,4 @@ springdoc:
 cors:
   allowed-origins:
     prod: ${AllowList}
+    local: ${AllowList}
