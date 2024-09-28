@@ -4,9 +4,9 @@ import com.kagouniv.kagouniv_back.domain.enums.Theme;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.annotations.Immutable;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Immutable
@@ -23,7 +23,7 @@ public class HabitView {
 
     private LocalDate endAt;
 
-    private LocalDate lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     private Integer targetCount; // 사용자가 하고자 하는 횟수
 
