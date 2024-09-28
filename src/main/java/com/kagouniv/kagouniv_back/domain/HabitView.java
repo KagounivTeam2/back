@@ -23,7 +23,7 @@ public class HabitView {
 
     private LocalDate endAt;
 
-    private LocalDate lastModified;
+    private LocalDate lastModifiedDate;
 
     private Integer targetCount; // 사용자가 하고자 하는 횟수
 
