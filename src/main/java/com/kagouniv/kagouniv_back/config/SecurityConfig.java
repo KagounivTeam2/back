@@ -51,17 +51,6 @@ public class SecurityConfig {
             "/v3/api-docs/**",
     };
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("/**");
-                config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter();
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -95,7 +84,6 @@ public class SecurityConfig {
                 }))
             .exceptionHandling(req -> req.authenticationEntryPoint(jwtAuthenticationEntryPoint()))
                 .addFilterAfter(jsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class)
-                .addFilterBefore(corsFilter(), JsonUsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationProcessingFilter(), JsonUsernamePasswordAuthenticationFilter.class)
 
                 // // 커스텀 접근 거부 핸들러 설정
