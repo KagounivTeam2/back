@@ -33,13 +33,13 @@ public class HabitService {
 
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
-        List<Habit> habits = habitRepository.findByUser(user);
+        List<HabitView> habits = habitViewRepository.findByUser(user);
 
         Map<String, Object> habitCreateResponseDtos = new HashMap<>();
 
         habitCreateResponseDtos.put("userHabits", habits.stream()
                 .map(habit ->
-                    HabitCreateResponseDto.of(habit, favoriteHabitRepository.existsByHabitId(habit.getId()))
+                    HabitViewResponseDto.of(habit, favoriteHabitRepository.existsByHabitId(habit.getId()))
                 ).collect(Collectors.toList()));
         habitCreateResponseDtos.put("userId", user.getId());
         return habitCreateResponseDtos;
@@ -50,7 +50,7 @@ public class HabitService {
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
-        HabitView habitView = habitViewRepository.getHabit(habitId)
+        HabitView habitView = habitViewRepository.findById(habitId)
                 .orElseThrow(()-> new ApiException(ErrorDefine.INVALID_ARGUMENT));
 
         Boolean isFavorite = favoriteHabitRepository.existsByHabitId(habitView.getId());
@@ -76,11 +76,11 @@ public class HabitService {
     public HabitCreateResponseDto createHabit(HabitCreateRequestDto habitCreateRequestDto, String userId) {
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
-        log.info("user : {}", user.getId());
+
         Habit habit = habitCreateRequestDto.toEntity(user);
-        log.info("habit : {}", habit.getHabitName());
+
         habitRepository.save(habit);
-        log.info("habit : {}", habit.getId());
+
         if(habitCreateRequestDto.favoriteState()) {
             FavoriteHabit favoriteHabit = habitCreateRequestDto.toFavoriteEntity(habit, user);
             favoriteHabitRepository.save(favoriteHabit);
@@ -110,12 +110,6 @@ public class HabitService {
 
         habit.updateCount();
 
-//        FavoriteHabit favoriteHabit = FavoriteHabit.builder()
-//                .habit(habit)
-//                .user(user)
-//                .build();
-//        favoriteHabitRepository.save(favoriteHabit);
-
         return HabitCompleteResponseDto.of(habit);
     }
 
@@ -131,7 +125,6 @@ public class HabitService {
                 .user(user)
                 .build();
         favoriteHabitRepository.save(favoriteHabit);
-
 
         return HabitCreateResponseDto.of(habit, true);
     }

@@ -28,7 +28,7 @@ public record HabitCreateResponseDto(
                 habit.getTargetCount(),
                 habit.getCurrentCount(),
                 habit.getTheme(),
-                false,
+                habit.getIsDone(),
                 favoriteState
         );
     }
