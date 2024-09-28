@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByLoginId(String loginId);
 
     Optional<User> findByRefreshToken(String refreshToken);
+
+    void deleteUserByLoginId(String loginId);
+
 }
