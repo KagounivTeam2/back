@@ -2,6 +2,7 @@ package com.kagouniv.kagouniv_back.domain;
 
 
 import com.kagouniv.kagouniv_back.domain.enums.Theme;
+import com.kagouniv.kagouniv_back.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @DynamicUpdate
-public class Habit {
+public class Habit extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
