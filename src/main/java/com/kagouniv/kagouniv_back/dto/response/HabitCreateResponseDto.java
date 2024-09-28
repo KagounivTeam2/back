@@ -5,6 +5,8 @@ import com.kagouniv.kagouniv_back.domain.HabitView;
 import com.kagouniv.kagouniv_back.domain.enums.Theme;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public record HabitCreateResponseDto(
         String habitId,
@@ -20,11 +22,13 @@ public record HabitCreateResponseDto(
 
 ) {
     public static HabitCreateResponseDto of(Habit habit, Boolean favoriteState) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 원하는 포맷 설정
+
         return new HabitCreateResponseDto(
                 habit.getId().toString(),
                 habit.getHabitName(),
-                habit.getStartAt().toString(),
-                habit.getEndAt().toString(),
+                habit.getStartAt() != null ? habit.getStartAt().format(formatter) : "",  // 값이 없을 때 빈 문자열 반환
+                habit.getEndAt() != null ? habit.getEndAt().format(formatter) : "",      // LocalDateTime을 문자열로 변환,  // 값이 없을 때 빈 문자열 반환
                 habit.getTargetCount(),
                 habit.getCurrentCount(),
                 habit.getTheme(),
