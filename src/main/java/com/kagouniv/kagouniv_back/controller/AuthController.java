@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -29,7 +26,7 @@ public class AuthController {
     }
 
     @Operation(summary = "로그아웃", description = "로그아웃")
-    @PostMapping("/logout")
+    @PatchMapping
     public ResponseDto<String> logout(HttpServletRequest request) {
         authService.logout(request);
         return new ResponseDto<>("로그아웃이 성공적으로 처리되었습니다");
