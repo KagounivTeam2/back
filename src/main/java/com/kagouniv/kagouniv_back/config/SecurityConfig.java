@@ -57,39 +57,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(cors -> cors.configurationSource(request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(List.of("/**"));
-            config.setAllowedMethods(List.of("PATCH","GET","POST","PUT","DELETE","HEAD","OPTIONS"));
-            config.setAllowedHeaders(List.of("*"));
-            config.setAllowCredentials(true);
-            return config;
-        }));
-
-        http.formLogin(AbstractHttpConfigurer::disable);
-        http.httpBasic(AbstractHttpConfigurer::disable);
-
-        http.headers(
-                headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-
-        http.sessionManagement(
-                sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        http.authorizeHttpRequests(
-                        (authorize) ->
-                                authorize
-                                        .requestMatchers("/api/auth/login").permitAll()
-                                        .requestMatchers("/api/auth").permitAll()
-                                        .requestMatchers("/**").permitAll()
-                                        .requestMatchers("/swagger-ui/**", "swagger-resources/**").permitAll()
-                                        .requestMatchers("/v3/api-docs/**").permitAll()
-                                        .anyRequest().authenticated());
-
-                // logout 설정
-        http.logout(logout -> logout.
+        http
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(sessionManagement ->
+                            sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .formLogin(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(authorize -> authorize
+                    .requestMatchers("/api/auth/login").permitAll()
+                    .requestMatchers("/api/auth").permitAll()
+                    .requestMatchers("/**").permitAll()
+                    .requestMatchers("/swagger-ui/**", "swagger-resources/**").permitAll()
+                    .requestMatchers("/v3/api-docs/**").permitAll()
+                    .anyRequest().authenticated())
+            .headers(
+                headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+            .logout(logout -> logout.
                 logoutUrl("/api/auth/logout")
 //                logoutSuccessUrl("/").
                 .invalidateHttpSession(true)
@@ -97,10 +80,8 @@ public class SecurityConfig {
                     response.setStatus(HttpServletResponse.SC_OK);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(new ResponseDto<>(null)));
                     response.getWriter().flush();
-                }));
-
-                // Jwt 관련 설정
-        http.exceptionHandling(req -> req.authenticationEntryPoint(jwtAuthenticationEntryPoint()))
+                }))
+            .exceptionHandling(req -> req.authenticationEntryPoint(jwtAuthenticationEntryPoint()))
                 .addFilterAfter(jsonUsernamePasswordAuthenticationFilter(), LogoutFilter.class)
                 .addFilterBefore(jwtAuthenticationProcessingFilter(), JsonUsernamePasswordAuthenticationFilter.class)
 
