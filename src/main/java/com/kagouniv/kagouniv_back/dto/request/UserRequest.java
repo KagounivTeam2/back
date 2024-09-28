@@ -9,8 +9,9 @@ public record UserRequest(
 
         @NotNull
         @Size(min = 6, max = 12, message = "아이디는 6자리 이상, 12자리 이하로 입력해주세요")
-        @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "영어와 숫자만 입력 가능합니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9가-힣]+$", message = "영어, 숫자, 한글만 입력 가능합니다.")
         String loginId,
+
 
         @NotNull
         @Size(min = 8, max = 50, message = "비밀번호 8자리 이상, 50자리 이하로 입력해주세요")
