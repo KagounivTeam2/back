@@ -52,7 +52,6 @@ public class SecurityConfig {
             "/v3/api-docs/**",
     };
 
-
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -80,8 +79,6 @@ public class SecurityConfig {
             .formLogin(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers("/login").permitAll()
-                    .requestMatchers("/api/**").permitAll()
-                    .requestMatchers("/**").permitAll()
                     .requestMatchers("/swagger-ui/**", "swagger-resources/**").permitAll()
                     .requestMatchers("/v3/api-docs/**").permitAll()
                     .anyRequest().authenticated())
@@ -89,7 +86,6 @@ public class SecurityConfig {
                 headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
             .logout(logout -> logout.
                 logoutUrl("/api/auth/logout")
-//                logoutSuccessUrl("/").
                 .invalidateHttpSession(true)
                 .logoutSuccessHandler((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
