@@ -35,4 +35,10 @@ public class StatisticsController {
         Long completeCount = statisticsService.getCompleteCount(userId);
         return new ResponseDto<>(Map.of("completeCount", completeCount));
     }
+
+    @Operation(summary = "퍼센트", description = "퍼센트")
+    @GetMapping("/percent")
+    public ResponseDto<?> getPercent(@UserId String userId) {
+        return new ResponseDto<>(statisticsService.getPercent(userId));
+    }
 }
