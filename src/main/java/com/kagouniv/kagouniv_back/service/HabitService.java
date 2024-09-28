@@ -1,19 +1,14 @@
 package com.kagouniv.kagouniv_back.service;
 
-import com.kagouniv.kagouniv_back.domain.FavoriteHabit;
-import com.kagouniv.kagouniv_back.domain.Habit;
-import com.kagouniv.kagouniv_back.domain.Recommend;
-import com.kagouniv.kagouniv_back.domain.User;
+import com.kagouniv.kagouniv_back.domain.*;
 import com.kagouniv.kagouniv_back.dto.request.HabitCreateRequestDto;
 import com.kagouniv.kagouniv_back.dto.response.HabitCompleteResponseDto;
 import com.kagouniv.kagouniv_back.dto.response.HabitCreateResponseDto;
+import com.kagouniv.kagouniv_back.dto.response.HabitViewResponseDto;
 import com.kagouniv.kagouniv_back.dto.response.RecommendResponseDto;
 import com.kagouniv.kagouniv_back.exception.ApiException;
 import com.kagouniv.kagouniv_back.exception.ErrorDefine;
-import com.kagouniv.kagouniv_back.repository.FavoriteHabitRepository;
-import com.kagouniv.kagouniv_back.repository.HabitRepository;
-import com.kagouniv.kagouniv_back.repository.RecommendRepository;
-import com.kagouniv.kagouniv_back.repository.UserRepository;
+import com.kagouniv.kagouniv_back.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +27,7 @@ public class HabitService {
     private final UserRepository userRepository;
     private final FavoriteHabitRepository favoriteHabitRepository;
     private final RecommendRepository recommendRepository;
+    private final HabitViewRepository habitViewRepository;
     // 사용자 습관 리스트 가져오기
     public Map<String, Object> getUserHabits(String userId) {
 
@@ -43,21 +39,24 @@ public class HabitService {
 
         habitCreateResponseDtos.put("userHabits", habits.stream()
                 .map(habit ->
-                    HabitCreateResponseDto.of(habit, favoriteHabitRepository.existsByHabit(habit))
+                    HabitCreateResponseDto.of(habit, favoriteHabitRepository.existsByHabitId(habit.getId()))
                 ).collect(Collectors.toList()));
         habitCreateResponseDtos.put("userId", user.getId());
         return habitCreateResponseDtos;
     }
 
     // 습관 정보 가져오기
-    public HabitCreateResponseDto getHabitById(UUID habitId) {
+    public HabitViewResponseDto getHabitById(UUID habitId, String userId) {
+        User user = userRepository.findByLoginId(userId)
+                .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
-        Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() -> new ApiException(ErrorDefine.HABIT_NOT_FOUND));
+        HabitView habitView = habitViewRepository.findById(habitId)
+                .orElseThrow(()-> new ApiException(ErrorDefine.INVALID_ARGUMENT));
 
-        Boolean isFavorite = favoriteHabitRepository.existsByHabit(habit);
-        log.info("sdf"+ habit.getHabitName());
-        return HabitCreateResponseDto.of(habit,isFavorite);
+        Boolean isFavorite = favoriteHabitRepository.existsByHabitId(habitView.getId());
+
+        log.info("sdf"+ habitView.getHabitName());
+        return HabitViewResponseDto.of(habitView,isFavorite);
     }
 
     // 추천 습관 리스트 가져오기

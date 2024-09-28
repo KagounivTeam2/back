@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface FavoriteHabitRepository extends JpaRepository<FavoriteHabit, UUID> {
-    Boolean existsByHabit(Habit habit);
+    Boolean existsByHabitId(UUID habitId);
 }

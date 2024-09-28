@@ -32,10 +32,11 @@ public class HabitController {
     @Operation(summary = "습관 정보 가져오기", description = "습관 정보를 조회합니다.")
     @GetMapping("/{habitId}")
     public ResponseDto<?> getHabitInfo(
-            @PathVariable("habitId") UUID habitId
+            @PathVariable("habitId") UUID habitId,
+            @UserId String userId
     ) {
         // 구현 코드
-        return new ResponseDto<>(habitService.getHabitById(habitId));
+        return new ResponseDto<>(habitService.getHabitById(habitId, userId));
     }
 
     @Operation(summary = "추천 습관 리스트 가져오기", description = "추천 습관 리스트를 조회합니다.")

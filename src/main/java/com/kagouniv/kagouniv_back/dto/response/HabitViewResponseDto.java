@@ -1,12 +1,11 @@
 package com.kagouniv.kagouniv_back.dto.response;
 
-import com.kagouniv.kagouniv_back.domain.Habit;
 import com.kagouniv.kagouniv_back.domain.HabitView;
 import com.kagouniv.kagouniv_back.domain.enums.Theme;
 
 import java.time.LocalDate;
 
-public record HabitCreateResponseDto(
+public record HabitViewResponseDto(
         String habitId,
         String habitName,
         LocalDate startAt,
@@ -16,11 +15,9 @@ public record HabitCreateResponseDto(
         Theme theme,
         Boolean habitState,
         Boolean favoriteState
-
-
 ) {
-    public static HabitCreateResponseDto of(Habit habit, Boolean favoriteState) {
-        return new HabitCreateResponseDto(
+    public static HabitViewResponseDto of(HabitView habit, Boolean favoriteState) {
+        return new HabitViewResponseDto(
                 habit.getId().toString(),
                 habit.getHabitName(),
                 habit.getStartAt(),
