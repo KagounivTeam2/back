@@ -20,9 +20,9 @@ public class HabitView {
 
     private LocalDate endAt;
 
-    private Integer targetCount;
+    private Integer targetCount; // 사용자가 하고자 하는 횟수
 
-    private Integer currentCount;
+    private Integer currentCount; // 사용자가 완료한 횟수
 
     @Enumerated(EnumType.STRING)
     private Theme theme;
