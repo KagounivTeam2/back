@@ -32,4 +32,6 @@ public class HabitView {
     @Column(columnDefinition = "INTEGER")
     private Boolean isDone;
 
+    private UUID userId;
+
 }

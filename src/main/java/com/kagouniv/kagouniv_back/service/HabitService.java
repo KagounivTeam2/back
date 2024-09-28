@@ -33,7 +33,7 @@ public class HabitService {
 
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
-        List<HabitView> habits = habitViewRepository.findByUser(user);
+        List<HabitView> habits = habitViewRepository.findByUserId(user.getId());
 
         Map<String, Object> habitCreateResponseDtos = new HashMap<>();
 
