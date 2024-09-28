@@ -16,7 +16,7 @@ public record HabitViewResponseDto(
         Theme theme,
         Boolean habitState,
         Boolean favoriteState,
-        LocalDateTime lastModifiedDate
+        String lastModifiedDate
 ) {
     public static HabitViewResponseDto of(HabitView habit, Boolean favoriteState) {
         return new HabitViewResponseDto(
@@ -29,7 +29,7 @@ public record HabitViewResponseDto(
                 habit.getTheme(),
                 habit.getIsDone(),
                 favoriteState,
-                habit.getLastModifiedDate()
+                habit.getLastModifiedDate().toString()
         );
     }
 }
