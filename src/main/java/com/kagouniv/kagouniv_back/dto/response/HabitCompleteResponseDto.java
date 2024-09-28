@@ -1,12 +1,15 @@
 package com.kagouniv.kagouniv_back.dto.response;
 
+import com.kagouniv.kagouniv_back.domain.Habit;
+
 import java.util.UUID;
 
 public record HabitCompleteResponseDto(
         UUID habitId,
-        Boolean favoriteState
+        Integer realCount,
+        Integer targetCount
 ) {
-    public static HabitCompleteResponseDto of(UUID habitId, Boolean favoriteState) {
-        return new HabitCompleteResponseDto(habitId, favoriteState);
+    public static HabitCompleteResponseDto of(Habit habit) {
+        return new HabitCompleteResponseDto(habit.getId(), habit.getCurrentCount(), habit.getTargetCount());
     }
 }

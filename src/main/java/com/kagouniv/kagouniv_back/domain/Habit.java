@@ -69,8 +69,8 @@ public class Habit {
         this.user = user;
     }
 
-    public void completeHabit() {
-        this.isDone = true;
+    public void updateCount() {
+        this.currentCount += 1;
     }
 
 }

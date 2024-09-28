@@ -46,13 +46,14 @@ public class HabitService {
     }
 
     // 습관 정보 가져오기
-    public Habit getHabitById(UUID habitId) {
+    public HabitCreateResponseDto getHabitById(UUID habitId) {
+
         Habit habit = habitRepository.findById(habitId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.HABIT_NOT_FOUND));
-        Boolean isFavorite = favoriteHabitRepository.existsByHabit(habit);
 
-        HabitCreateResponseDto.of(habit, isFavorite);
-        return new Habit();
+        Boolean isFavorite = favoriteHabitRepository.existsByHabit(habit);
+        log.info("sdf"+ habit.getHabitName());
+        return HabitCreateResponseDto.of(habit,isFavorite);
     }
 
     // 추천 습관 리스트 가져오기
@@ -93,15 +94,18 @@ public class HabitService {
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
         Habit habit = habitRepository.findById(habitId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.HABIT_NOT_FOUND));
-        habit.completeHabit();
+        if(Objects.equals(habit.getCurrentCount(), habit.getTargetCount()) || habit.getTargetCount() == null)
+            throw new ApiException(ErrorDefine.ALREADY_FINISH_HABIT);
 
-        FavoriteHabit favoriteHabit = FavoriteHabit.builder()
-                .habit(habit)
-                .user(user)
-                .build();
-        favoriteHabitRepository.save(favoriteHabit);
+        habit.updateCount();
 
-        return HabitCompleteResponseDto.of(habit.getId(), true);
+//        FavoriteHabit favoriteHabit = FavoriteHabit.builder()
+//                .habit(habit)
+//                .user(user)
+//                .build();
+//        favoriteHabitRepository.save(favoriteHabit);
+
+        return HabitCompleteResponseDto.of(habit);
     }
 
     // 습관 즐겨찾기 설정
