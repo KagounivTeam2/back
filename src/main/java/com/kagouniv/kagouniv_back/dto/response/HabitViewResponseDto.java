@@ -4,6 +4,7 @@ import com.kagouniv.kagouniv_back.domain.HabitView;
 import com.kagouniv.kagouniv_back.domain.enums.Theme;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record HabitViewResponseDto(
         String habitId,
@@ -14,7 +15,8 @@ public record HabitViewResponseDto(
         Integer realCount,
         Theme theme,
         Boolean habitState,
-        Boolean favoriteState
+        Boolean favoriteState,
+        LocalDateTime lastModifiedDate
 ) {
     public static HabitViewResponseDto of(HabitView habit, Boolean favoriteState) {
         return new HabitViewResponseDto(
@@ -26,7 +28,8 @@ public record HabitViewResponseDto(
                 habit.getCurrentCount(),
                 habit.getTheme(),
                 habit.getIsDone(),
-                favoriteState
+                favoriteState,
+                habit.getLastModifiedDate()
         );
     }
 }

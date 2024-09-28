@@ -8,9 +8,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.objenesis.instantiator.util.UnsafeUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,7 +61,16 @@ public class Habit extends BaseTimeEntity {
     //---------------------------------------------------------
 
     @Builder
-    public Habit(String habitName, LocalDate startAt, LocalDate endAt, Integer targetCount, Integer currentCount, Theme theme, User user) {
+    public Habit(
+            String habitName,
+            LocalDate startAt,
+            LocalDate endAt,
+            Integer targetCount,
+            Integer currentCount,
+            Theme theme,
+            User user,
+            LocalDateTime lastModifiedDate
+    ) {
         this.habitName = habitName;
         this.startAt = startAt;
         this.endAt = endAt;
@@ -67,6 +78,7 @@ public class Habit extends BaseTimeEntity {
         this.currentCount = currentCount;
         this.theme = theme;
         this.isDone = false;
+        this.lastModifiedDate = lastModifiedDate;
         this.user = user;
     }
 
