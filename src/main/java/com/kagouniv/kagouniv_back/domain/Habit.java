@@ -69,4 +69,8 @@ public class Habit {
         this.user = user;
     }
 
+    public void completeHabit() {
+        this.isDone = true;
+    }
+
 }
