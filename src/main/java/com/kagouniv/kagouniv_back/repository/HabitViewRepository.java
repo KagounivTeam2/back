@@ -6,10 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface HabitViewRepository extends JpaRepository<HabitView, UUID> {
+
+    @Query("SELECT hv from HabitView hv where hv.id = :habitId")
+    Optional<HabitView> getHabit(@Param("habitId") UUID habitId);
+
 
     // 특정 유저의 습관 총 횟수 조회
     @Query("SELECT SUM(h.targetCount) FROM HabitView h WHERE h.id = :userId")

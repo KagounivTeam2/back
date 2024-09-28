@@ -50,7 +50,7 @@ public class HabitService {
         User user = userRepository.findByLoginId(userId)
                 .orElseThrow(() -> new ApiException(ErrorDefine.USER_NOT_FOUND));
 
-        HabitView habitView = habitViewRepository.findById(habitId)
+        HabitView habitView = habitViewRepository.getHabit(habitId)
                 .orElseThrow(()-> new ApiException(ErrorDefine.INVALID_ARGUMENT));
 
         Boolean isFavorite = favoriteHabitRepository.existsByHabitId(habitView.getId());
